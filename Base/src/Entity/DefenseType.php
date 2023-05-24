@@ -9,12 +9,21 @@ use Doctrine\ORM\Mapping as ORM;
 class DefenseType
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
     #[ORM\Column(length: 20)]
     private ?string $name = null;
 
-    public function __construct($defenseTypeName)
+    public function __construct(string $name)
     {
-        $this->name = $defenseTypeName;
+        $this->name = $name;
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
     }
 
     public function getName(): ?string

@@ -37,10 +37,10 @@ class Competition
     public function insertCardType()
     {
 
-        $liga = new CardTypes();
-        $liga->setName("Amarilla");
+        $liga = new Competition();
+        $liga->setName("Liga");
 
-        $redCard = new CardTypes();
-        $redCard->setName("Red");
+        $copa = new Competition();
+        $copa->setName("Copa");
     }
 }

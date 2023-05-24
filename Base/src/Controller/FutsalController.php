@@ -3,19 +3,21 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Doctrine\ORM\EntityManagerInterface;
 
+use App\Entity\Category;
 
 class FutsalController  extends AbstractController{
     #[Route("/", name:"home")]
-    public function home()
+    public function home(EntityManagerInterface $doctrine)
     {
+        $categoriesRepo = $doctrine->getRepository(Category::class);
+        $allCategories = $categoriesRepo->findAll();
         return $this->render(
-            "home.html.twig"
+            "home.html.twig",
+            ["allCategories"=> $allCategories]
         );
     }
 

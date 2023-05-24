@@ -1,0 +1,16 @@
+{% extends 'parents/basic.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<div class="mt-5">
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% else %}
+        <h1 class="h3 mb-3 font-weight-normal">Formulario de registro</h1>
+        {{form(registrationForm)}}
+    {% endif %}
+</div">
+{% endblock %}

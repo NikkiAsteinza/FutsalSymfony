@@ -9,19 +9,29 @@ use Doctrine\ORM\Mapping as ORM;
 class Season
 {
     #[ORM\Id]
-    #[ORM\Column(length: 9)]
-    private ?string $name = null;
-
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+    
     #[ORM\Column]
     private ?int $startYear = null;
 
     #[ORM\Column]
     private ?int $endYear = null;
 
-    public function __construct($start, $end){
-        $this->startYear = $start;
-        $this->endYear = $end;
-        $this->name = $start."-".$end;
+    #[ORM\Column(length: 9)]
+    private ?string $name = null;
+
+    public function __construct(string $startYear, string $endYear)
+    {
+        $this->startYear = $startYear;
+        $this->endYear = $endYear;
+        $this->name = $startYear."-".$endYear;
+    }
+
+    public function getId(): ?string
+    {
+        return $this->id;
     }
 
     public function getStartYear(): ?int

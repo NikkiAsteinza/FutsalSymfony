@@ -9,14 +9,21 @@ use Doctrine\ORM\Mapping as ORM;
 class PassesType
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
     #[ORM\Column(length: 20)]
     private ?string $name = null;
 
     public function __construct(string $name)
     {
         $this->name = $name;
+    }
 
-        return $this;
+    public function getId(): ?string
+    {
+        return $this->id;
     }
 
     public function getName(): ?string
