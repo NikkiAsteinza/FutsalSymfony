@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpClient\HttpClient;
+
+
 
 class FutsalController  extends AbstractController{
     #[Route("/", name:"home")]
@@ -14,4 +18,18 @@ class FutsalController  extends AbstractController{
             "home.html.twig"
         );
     }
+
+
+    // #[Route("/insert/genders")]
+    // public function insertGenders(EntityManagerInterface $doctrine)
+    // {
+    //     $femenino = new Genders("Femenino");
+    //     $masculino = new Genders("Masculino");
+
+    //     $doctrine->persist($femenino);
+    //     $doctrine->persist($masculino);
+    //     $doctrine->flush();
+
+    //     return new Response("Géneros insertadas correctamente");
+    // }
 }?>
