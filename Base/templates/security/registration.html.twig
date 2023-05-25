@@ -1,16 +1,26 @@
 {% extends 'parents/basic.html.twig' %}
-
-{% block title %}Log in!{% endblock %}
-
+{% block javascripts %}
+    <script src="/common/js/upload-preview.js"></script>
+{% endblock %}
+{% block title %}Registro!{% endblock %}
 {% block body %}
-<div class="mt-5">
+
+<div class="d-flex justify-content-center align-items-middle flex-grow p-3 m-0 mt-3">
+    <div>
     {% if app.user %}
         <div class="mb-3">
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% else %}
-        <h1 class="h3 mb-3 font-weight-normal">Formulario de registro</h1>
+        <h1 class="mb-3 font-weight-normal display-3">Alta de club</h1>
+        <p>Para registrarse en la web <b> es necesaria la identificación del club a través del CIF</b>.</p>
+        <div id='img-preview' style="width: 300px; height:300px; display:none;" class='align-self-center border rounded-circle mt-3 mb-5'></div>
+        <div>
         {{form(registrationForm)}}
+        </div>
     {% endif %}
-</div">
+    </div>
+</div>
+
 {% endblock %}
+

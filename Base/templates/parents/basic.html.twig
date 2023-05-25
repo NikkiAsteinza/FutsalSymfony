@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="container-fluid w-100 h-100 overflow-hidden p-0" style="background: rgb(124,124,124); background: linear-gradient(180deg, rgba(124,124,124,1) 0%, rgba(255,255,255,1) 100%);">
+<html class="d-block w-100 h-100 overflow-hidden p-0" style="background: rgb(124,124,124); background: linear-gradient(180deg, rgba(124,124,124,1) 0%, rgba(255,255,255,1) 100%);">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Futsal FM!{% endblock %}</title>
@@ -8,13 +8,14 @@
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+             <link rel="stylesheet" href="common/styles/main.css"/>
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body class="container-fluid pt-3" style="background-color:rgba(0,0,0,0);">
+    <body class="container-fluid pt-3 w-100 h-100" style="background-color:rgba(0,0,0,0);">
         {% block header %}
   <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light" style="filter: drop-shadow(0px 10px 4px rgba(0,0,0,0.8));">
   <a class="navbar-brand" href="{{ path('home') }}"><h1>Futsal FM</h1></a>
