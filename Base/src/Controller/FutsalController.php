@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Category;
+use App\Entity\Club;
 
 class FutsalController  extends AbstractController{
     #[Route("/", name:"home")]
@@ -15,9 +16,11 @@ class FutsalController  extends AbstractController{
     {
         $categoriesRepo = $doctrine->getRepository(Category::class);
         $allCategories = $categoriesRepo->findAll();
+        $clubRepo = $doctrine->getRepository(Club::class);
+        $allClubs = $clubRepo->findAll();
         return $this->render(
             "home.html.twig",
-            ["allCategories"=> $allCategories]
+            ["allCategories"=> $allCategories, $allClubs]
         );
     }
 

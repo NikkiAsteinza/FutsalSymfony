@@ -37,15 +37,16 @@ class Club
     #[ORM\Column(type: Types::BINARY, nullable: true)]
     private $emblem = null;
 
-    #[ORM\OneToMany(mappedBy: 'club', targetEntity: User::class)]
-    private Collection $owner;
+    #[ORM\OneToOne(inversedBy: 'Club', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
 
-    public function __construct(string $cif, string $name, string $email, $phone)
+
+
+    public function __construct(string $cif, string $name)
     {
         $this->cif = $cif;
         $this->name = $name;
-        $this->phone = $phone;
-        $this->owner = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,33 +138,16 @@ class Club
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getOwner(): Collection
+    public function getOwner(): ?User
     {
         return $this->owner;
     }
 
-    public function addOwner(User $owner): self
+    public function setOwner(User $owner): self
     {
-        if (!$this->owner->contains($owner)) {
-            $this->owner->add($owner);
-            $owner->setClub($this);
-        }
+        $this->owner = $owner;
 
         return $this;
     }
 
-    public function removeOwner(User $owner): self
-    {
-        if ($this->owner->removeElement($owner)) {
-            // set the owning side to null (unless already changed)
-            if ($owner->getClub() === $this) {
-                $owner->setClub(null);
-            }
-        }
-
-        return $this;
-    }
 }

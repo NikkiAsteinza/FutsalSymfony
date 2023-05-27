@@ -1,17 +1,21 @@
 label{
-    display:block;
+
     font-weight: 600;
+    font-size:1.2rem;
 }
+
 input{
-    font-size:2rem;
+    font-size:1.5rem;
     margin-bottom:30px;
     min-width: 50px;
     min-height:50px;
 }
+
 button{
-    width:100%;
-    max-width:450px;
-    font-size:2rem;
-    min-height:50px;
+font-size:1.5rem;
+min-height:50px;
 }
-p{}
+
+p{
+    font-size:1.2rem;
+}

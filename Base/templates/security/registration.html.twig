@@ -1,10 +1,8 @@
 {% extends 'parents/basic.html.twig' %}
-{% block javascripts %}
-    <script src="/common/js/upload-preview.js"></script>
-{% endblock %}
-{% block title %}Registro!{% endblock %}
-{% block body %}
 
+{% block title %}Registro!{% endblock %}
+
+{% block body %}
 <div class="d-flex justify-content-center align-items-middle flex-grow p-3 m-0 mt-3">
     <div>
     {% if app.user %}
@@ -12,15 +10,45 @@
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% else %}
-        <h1 class="mb-3 font-weight-normal display-3">Alta de club</h1>
-        <p>Para registrarse en la web <b> es necesaria la identificación del club a través del CIF</b>.</p>
-        <div id='img-preview' style="width: 300px; height:300px; display:none;" class='align-self-center border rounded-circle mt-3 mb-5'></div>
-        <div>
-        {{form(registrationForm)}}
+        <div class="sticky-top p-3 mb-0 text-left jumbotron jumbotron-fluid rounded d-flex align-items-center justify-content-between" style="background-color: rgba(0,204,221,1);border:2px solid black;">
+            <div class="w-50">
+                <h1 class="mb-3 font-weight-normal display-3">Alta de club</h1>
+                <p>Para registrarse en la web es necesaria la identificación del club a través del CIF.</p>
+            </div>
+            <div id='img-preview' style="width: 225px; height:225px;" class=' border rounded-circle mt-3 mb-5'></div>
+        </div>
+        <div class="m-3">
+        {{ form_start(registrationForm) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(registrationForm) }}
+        </div>
+
+        <div class="row">
+
+            <div class="col">
+                {{ form_row(registrationForm.emblem) }}
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.password) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+            </div>
+            <div class="col" id="some-custom-id">
+                {{ form_row(registrationForm.phone) }}
+                {{ form_row(registrationForm.name) }}
+                {{ form_row(registrationForm.cif) }}
+            </div>
+        </div>
+    {{ form_end(registrationForm) }}
         </div>
     {% endif %}
     </div>
 </div>
-
 {% endblock %}
 
+{% block lastScripts %}
+    <script src="/common/js/preview.js"></script>
+{% endblock %}

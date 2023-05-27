@@ -26,6 +26,7 @@ class MailerController extends AbstractController
             } catch (TransportExceptionInterface $e) {
                 // some error prevented the email sending; display an
                 // error message or try to resend the message
+                return new Response("error ".$e->getMessage());
             }
         return new Response("Email enviado correctamente");
     }

@@ -48,4 +48,25 @@ class Season
     {
         return $this->name;
     }
+
+    public function setStartYear(int $startYear): self
+    {
+        $this->startYear = $startYear;
+
+        return $this;
+    }
+
+    public function setEndYear(int $endYear): self
+    {
+        $this->endYear = $endYear;
+
+        return $this;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 }

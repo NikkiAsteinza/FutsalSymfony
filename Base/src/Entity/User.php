@@ -39,8 +39,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $hasAcceptedTerms = false;
 
-    #[ORM\ManyToOne(inversedBy: 'owner')]
-    private ?Club $club = null;
+
+    #[ORM\Column(length: 9)]
+    private ?string $phone = null;
+
+    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
+    private ?Club $Club = null;
 
     public function getId(): ?int
     {
@@ -160,14 +164,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getClub(): ?Club
+    public function getPhone(): ?string
     {
-        return $this->club;
+        return $this->phone;
     }
 
-    public function setClub(?Club $club): self
+    public function setPhone(string $phone): self
     {
-        $this->club = $club;
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getClub(): ?Club
+    {
+        return $this->Club;
+    }
+
+    public function setClub(Club $Club): self
+    {
+        // set the owning side of the relation if necessary
+        if ($Club->getOwner() !== $this) {
+            $Club->setOwner($this);
+        }
+
+        $this->Club = $Club;
 
         return $this;
     }
