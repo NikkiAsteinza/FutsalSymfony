@@ -26,7 +26,7 @@ use App\Entity\User;
             ->to($user->getEmail())
             ->subject('[Futsal FM] - Alta de club - '.$clubName)
             ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+            ->html('<p>El club '.$clubName.'!</p>');
 
         try {
             $this->mailer->send($email);

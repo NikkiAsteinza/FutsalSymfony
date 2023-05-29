@@ -14,14 +14,27 @@ class FutsalController  extends AbstractController{
     #[Route("/", name:"home")]
     public function home(EntityManagerInterface $doctrine)
     {
-        $categoriesRepo = $doctrine->getRepository(Category::class);
-        $allCategories = $categoriesRepo->findAll();
-        $clubRepo = $doctrine->getRepository(Club::class);
-        $allClubs = $clubRepo->findAll();
         return $this->render(
             "home.html.twig",
-            ["allCategories"=> $allCategories, $allClubs]
+            [
+                "allCategories"=> $this->getAllCategories($doctrine),
+                "allClubs" => $this->getAllCLubs($doctrine)
+             ]
         );
+    }
+
+    public function getAllCategories($doctrine){
+
+        $categoriesRepo = $doctrine->getRepository(Category::class);
+        $allCategories = $categoriesRepo->findAll();
+        return $allCategories;
+    }
+
+    public function getAllCLubs($doctrine){
+
+        $clubRepo = $doctrine->getRepository(Club::class);
+        $allClubs = $clubRepo->findAll();
+        return $allClubs;
     }
 
 

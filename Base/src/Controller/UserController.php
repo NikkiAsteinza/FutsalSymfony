@@ -9,13 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\HttpFoundation\Request;
 use App\Manager\UserManager;
+use App\Manager\RedirectionManager;
 use App\Form\UserRegistrationType;
 use App\Entity\Club;
 
+
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\String\Slugger\SluggerInterface;
-
 
 class UserController  extends AbstractController{
     #[Route("/registro", name:"registro")]
@@ -23,33 +23,37 @@ class UserController  extends AbstractController{
         EntityManagerInterface $doctrine,
         Request $request,
         UserPasswordHasherInterface $hasher,
-        UserManager $manager)
+        UserManager $manager,
+        RedirectionManager $redirector)
     {
         $form = $this->createForm(UserRegistrationType::class);
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()){
             $user = $form->getData();
+            
+            $clubCif = $form->get('cif')->getData();
+            $clubName = $form->get('name')->getData();
 
             $password = $hasher->hashPassword($user,$user->getPassword());
             $user->setPassword($password);
 
-
             $newFilename = $this->uploadEmblem($form);
 
-            $doctrine->persist($user);
-
-            
-            // $mailer = new MailerController();
-            // $mailer.sendMail();
             $doctrine->flush();
-            $newCLub = new Club($newFilename,$form->get('name')->getData(),$user->getPhone());
-            $manager->sendEmail($user, "Texto hardcodeado");//, $newCLub->getName());
-            //$doctrine->persist($newCLub);
+            $newCLub = new Club($clubCif,$clubName);
+            $newCLub->setEmblem($newFilename);
+           
+            $user->setClub($newCLub);
+            $doctrine->persist($user);
+            $doctrine->persist($newCLub);
+            $doctrine->flush();
+            $manager->sendEmail($user, "Texto hardcodeado");
+            return $this->render("clubs/club.html.twig", ['club'=>$newCLub]);
         }
 
         return $this->render("security/registration.html.twig", ['registrationForm'=>$form]);
     }
-
 
     #[Route("/user", name:"user")]
     public function goToUserPage(
@@ -69,19 +73,19 @@ class UserController  extends AbstractController{
                 //$originalFilename = pathinfo($emblemFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 
-                $newFilename = uniqid().'.'.$emblemFile->guessExtension();
+                $newFilename = $form->get('name')->getData().'.'.$emblemFile->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $targetDir = 'specific/'.$form->get('name')->getData()."/emblem";
+                    $targetDir = 'specific/'.$form->get('name')->getData()."/branding";
                     if ( !is_dir($targetDir )) {
-                        mkdir('specific/'.$form->get('name')->getData()."/emblem", 0700, true);       
+                        mkdir('specific/'.$form->get('name')->getData()."/branding", 0700, true);       
                     }
                     $emblemFile->move(
                         $targetDir,
                         $newFilename
                     );
-                    return $newFilename;
+                    return $targetDir;
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }

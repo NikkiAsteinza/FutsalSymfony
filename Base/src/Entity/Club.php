@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ClubRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,18 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Club
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(length: 9)]
     private ?string $cif = null;
 
     #[ORM\Column(length: 30)]
     private ?string $name = null;
-
-    #[ORM\Column(length: 9)]
-    private ?string $phone = null;
 
     #[ORM\Column]
     private ?bool $isVerified = false;
@@ -41,17 +32,10 @@ class Club
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
 
-
-
     public function __construct(string $cif, string $name)
     {
         $this->cif = $cif;
         $this->name = $name;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getCif(): ?string
@@ -74,18 +58,6 @@ class Club
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(string $phone): self
-    {
-        $this->phone = $phone;
 
         return $this;
     }

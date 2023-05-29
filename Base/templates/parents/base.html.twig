@@ -29,7 +29,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Categorías
+          Equipos
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         {% for category in allCategories %}
@@ -41,18 +41,22 @@
       </li>
             <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Categorías
+          Clubs
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+        {% if allClubs%}
         {% for club in allClubs %}
-            <a class="dropdown-item" href="#" >{{club.name}}</a>
+            <a class="dropdown-item" href="#" >{{club.getName()}}</a>
         {% endfor %}
+        {% else %}
+          <a class="dropdown-item" href="#" >No hay clubs registrados</a>
+        {% endif %}
           {# <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div> #}
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">My pokedex</a>
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Torneos</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
